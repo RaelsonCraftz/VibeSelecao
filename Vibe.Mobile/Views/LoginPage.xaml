@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<craftz:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
+                 
+                 x:Class="Vibe.Mobile.Views.LoginPage"
+                 
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:droid="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels">
+
+    <ContentPage.BindingContext>
+        <viewmodel:LoginViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Image Source="xamarin_logo" 
+                   VerticalOptions="CenterAndExpand" />
+
+            <Entry Text="{Binding CPF}" />
+
+            <Entry Text="{Binding PasswordHash, Mode=OneWayToSource}"
+                   IsPassword="True" />
+        </StackLayout>
+    </ContentPage.Content>
+</craftz:BasePage>
