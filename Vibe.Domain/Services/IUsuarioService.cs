@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Vibe.Domain.Model.Input;
+using Vibe.Domain.Model.Output;
 
 namespace Vibe.Domain.Services
 {
     public interface IUsuarioService
     {
-        Task<string> Usuario(CriarUsuarioInput input);
+        Task<BaseOutput> Usuario(CriarUsuarioInput input);
     }
 }

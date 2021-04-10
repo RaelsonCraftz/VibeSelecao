@@ -49,7 +49,7 @@
             <Style TargetType="Entry">
                 <Setter Property="Visual" Value="Material" />
             </Style>
-            
+
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

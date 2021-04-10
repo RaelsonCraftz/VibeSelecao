@@ -29,7 +29,7 @@
 
             <!--Sempre que a tela de Login inicia, o campo deste Entry é limpado no code-behind-->
             <Entry x:Name="senhaEntry"
-                   Text="{Binding PasswordHash, Mode=OneWayToSource}"
+                   Text="{Binding SenhaHash, Mode=OneWayToSource}"
                    IsPassword="True"
                    Placeholder="Senha" />
 
@@ -41,7 +41,8 @@
                     BorderColor="{StaticResource Accent}"
                     BorderWidth="2"
                     Text="Cadastrar"
-                    TextColor="{StaticResource Accent}" />
+                    TextColor="{StaticResource Accent}"
+                    Command="{Binding AbrirCadastro}" />
             
         </StackLayout>
     </ContentPage.Content>

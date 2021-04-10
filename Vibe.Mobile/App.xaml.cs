@@ -1,4 +1,5 @@
-﻿using Vibe.Mobile.Services.API;
+﻿using Vibe.Mobile.Core;
+using Vibe.Mobile.Services.API;
 using Vibe.Mobile.Services.Shared;
 using Vibe.Mobile.Views;
 using Xamarin.Craftz.Services;
@@ -21,6 +22,9 @@ namespace Vibe.Mobile
             // Serviços de API
             DependencyService.Register<AutenticacaoService>();
             DependencyService.Register<UsuarioService>();
+
+            // Rotas do Shell
+            Routing.RegisterRoute(Rotas.Cadastro, typeof(CadastroPage));
 
             MainPage = new AppShell();
         }

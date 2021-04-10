@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Vibe.Domain.Model.Input;
 using Vibe.Domain.Services;
+using Vibe.Mobile.Core;
 using Vibe.Mobile.Services.Shared;
 using Xamarin.Forms;
 
@@ -20,12 +21,12 @@ namespace Vibe.Mobile.ViewModels
             autenticacaoService = DependencyService.Get<IAutenticacaoService>();
             applicationService = DependencyService.Get<IApplicationService>();
         }
+        
+        private string CPFSemMascara => CPF
+            .Replace("-", string.Empty)
+            .Replace(".", string.Empty);
 
         #region Bindable Properties
-
-        public string CPFSemMascara => CPF
-            .Replace("-", "")
-            .Replace(".", "");
 
         public string CPF
         {
@@ -35,22 +36,22 @@ namespace Vibe.Mobile.ViewModels
         private string _cpf;
 
         // A senha é armazenada na memória da aplicação já criptografada
-        public string PasswordHash
+        public string SenhaHash
         {
-            get => _passwordHash;
+            get => _senhaHash;
             set 
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    _passwordHash = string.Empty;
+                    _senhaHash = string.Empty;
                     return;
                 }
 
-                _passwordHash = CalcularMD5Hash(value); 
+                _senhaHash = Crypto.CalcularMD5Hash(value); 
                 OnPropertyChanged(); 
             }
         }
-        private string _passwordHash;
+        private string _senhaHash;
 
         #endregion
 
@@ -69,8 +70,8 @@ namespace Vibe.Mobile.ViewModels
                 {
                     var autenticacao = await autenticacaoService.Autenticacao(new AutenticacaoInput
                     { 
-                        Cpf = CPF,
-                        Senha = PasswordHash,
+                        Cpf = CPFSemMascara,
+                        Senha = SenhaHash,
                     });
 
                     // Caso não haja chave, exibir a mensagem enviada pela API
@@ -94,25 +95,24 @@ namespace Vibe.Mobile.ViewModels
             });
         }
 
+        public Command AbrirCadastro
+        {
+            get { if (_abrirCadastro == null) _abrirCadastro = new Command(AbrirCadastroExecute); return _abrirCadastro; }
+        }
+        private Command _abrirCadastro;
+        private void AbrirCadastroExecute()
+        {
+            logService.LogActionAsync(async () =>
+            {
+                await Shell.Current.GoToAsync(Rotas.Cadastro);
+            });
+        }
+
         #endregion
 
         #region Helpers
 
-        private string CalcularMD5Hash(string input)
-        {
-            using (MD5 md5 = MD5.Create())
-            {
-                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
 
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("X2"));
-                }
-                return sb.ToString();
-            }
-        }
 
         #endregion
 
@@ -120,7 +120,7 @@ namespace Vibe.Mobile.ViewModels
 
         public override void Initialize()
         {
-            // Inicialize os serviços no BaseViewModel
+            // Inicialize os serviços do BaseViewModel
             base.Initialize();
         }
 

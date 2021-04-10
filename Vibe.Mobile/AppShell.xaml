@@ -5,7 +5,8 @@
        Title="Vibe.Mobile"
        x:Class="Vibe.Mobile.AppShell"
        
-       xmlns:ui="clr-namespace:Vibe.Mobile.Assets.UI">
+       xmlns:ui="clr-namespace:Vibe.Mobile.Assets.UI"
+       xmlns:core="clr-namespace:Vibe.Mobile.Core">
 
     <!--
         The overall app visual hierarchy is defined here, along with navigation.
@@ -16,12 +17,12 @@
     <Shell.Resources>
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
-                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.BackgroundColor" Value="{StaticResource Accent}" />
                 <Setter Property="Shell.ForegroundColor" Value="White" />
                 <Setter Property="Shell.TitleColor" Value="White" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
                 <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
+                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Accent}" />
                 <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
                 <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
                 <Setter Property="Shell.TabBarTitleColor" Value="White"/>
@@ -79,7 +80,7 @@
         Utilizando o Shell como arquitetura de navegação, uma forma de se isolar a tela de login do restante do aplicativo é registrar essa tela como TabBar
     -->
     <TabBar>
-        <ShellContent Route="LoginPage" 
+        <ShellContent Route="{x:Static core:Rotas.Login}" 
                       ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>
     
@@ -88,18 +89,21 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
-    <FlyoutItem Title="Clients">
+    <FlyoutItem Title="Clientes">
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{x:Static ui:MaterialIcon.Person}"
                              Color="{StaticResource PrimaryText}"
                              FontFamily="{StaticResource FontIconFamily}"
                              Size="{StaticResource FontIconSize}" />
         </FlyoutItem.Icon>
-        <ShellContent Route="clients" ContentTemplate="{DataTemplate local:ClientesPage}" />
+        <ShellContent Route="{x:Static core:Rotas.Clientes}" 
+                      ContentTemplate="{DataTemplate local:ClientesPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
-    <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
+    <MenuItem Text="Logout" 
+              StyleClass="MenuItemLayoutStyle" 
+              Clicked="OnMenuItemClicked">
     </MenuItem>
 
     <!-- Optional Templates 

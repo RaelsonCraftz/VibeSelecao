@@ -10,11 +10,41 @@
                  xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
                  xmlns:controls="clr-namespace:Vibe.Mobile.Controls"
                  xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels">
+
+    <ContentPage.BindingContext>
+        <viewmodel:CadastroViewModel />
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout VerticalOptions="Center"
+                     Padding="5">
+
+            <Image Source="icLogo" />
+
+            <Label HorizontalOptions="Center" 
+                   FontSize="26"
+                   TextColor="{StaticResource Accent}"
+                   Text="Cadastro" />
+
+            <BoxView HeightRequest="5"
+                     BackgroundColor="{StaticResource Accent}" />
+
+            <controls:MaskedEntry Placeholder="CPF"
+                                  Text="{Binding CPF}" />
+
+            <Entry Placeholder="Nome" 
+                   Text="{Binding Nome}" />
+
+            <Entry Placeholder="Senha"
+                   Text="{Binding SenhaHash, Mode=OneWayToSource}"
+                   IsPassword="True"/>
+
+            <Label Text="Nascimento" />
+            <DatePicker Date="{Binding Nascimento}" />
+
+            <Button Text="Cadastrar"
+                    Command="{Binding Cadastrar}" />
+
         </StackLayout>
     </ContentPage.Content>
 </craftz:BasePage>
