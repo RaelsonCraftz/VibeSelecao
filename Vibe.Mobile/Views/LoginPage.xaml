@@ -1,28 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <craftz:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
-                 
                  x:Class="Vibe.Mobile.Views.LoginPage"
+                 x:DataType="viewmodel:LoginViewModel"
+                 x:TypeArguments="viewmodel:LoginViewModel"
                  
                  xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
                  xmlns:droid="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels">
+                 xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
+                 xmlns:controls="clr-namespace:Vibe.Mobile.Controls"
+                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels"
+                 
+                 Shell.NavBarIsVisible="False">
 
     <ContentPage.BindingContext>
         <viewmodel:LoginViewModel />
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout>
-
-            <Image Source="xamarin_logo" 
+        <StackLayout Spacing="5" Padding="5">
+            
+            <Image Source="icLogo" 
                    VerticalOptions="CenterAndExpand" />
 
-            <Entry Text="{Binding CPF}" />
+            <controls:MaskedEntry Text="{Binding CPF}"
+                                  Keyboard="Numeric"
+                                  Placeholder="CPF" />
 
-            <Entry Text="{Binding PasswordHash, Mode=OneWayToSource}"
-                   IsPassword="True" />
+            <!--Sempre que a tela de Login inicia, o campo deste Entry é limpado no code-behind-->
+            <Entry x:Name="senhaEntry"
+                   Text="{Binding PasswordHash, Mode=OneWayToSource}"
+                   IsPassword="True"
+                   Placeholder="Senha" />
+
+            <Button Text="Login"
+                    Command="{Binding Autenticar}" />
+
+            <Button VerticalOptions="EndAndExpand"
+                    BackgroundColor="{StaticResource TextIcons}"
+                    BorderColor="{StaticResource Accent}"
+                    BorderWidth="2"
+                    Text="Cadastrar"
+                    TextColor="{StaticResource Accent}" />
+            
         </StackLayout>
     </ContentPage.Content>
 </craftz:BasePage>

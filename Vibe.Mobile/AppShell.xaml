@@ -3,7 +3,9 @@
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:Vibe.Mobile.Views"
        Title="Vibe.Mobile"
-       x:Class="Vibe.Mobile.AppShell">
+       x:Class="Vibe.Mobile.AppShell"
+       
+       xmlns:ui="clr-namespace:Vibe.Mobile.Assets.UI">
 
     <!--
         The overall app visual hierarchy is defined here, along with navigation.
@@ -77,7 +79,8 @@
         Utilizando o Shell como arquitetura de navegação, uma forma de se isolar a tela de login do restante do aplicativo é registrar essa tela como TabBar
     -->
     <TabBar>
-        <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
+        <ShellContent Route="LoginPage" 
+                      ContentTemplate="{DataTemplate local:LoginPage}" />
     </TabBar>
     
     <!-- 
@@ -85,17 +88,19 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
-    <FlyoutItem Title="About" Icon="icon_about.png">
-        <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:AboutPage}" />
-    </FlyoutItem>
-    <FlyoutItem Title="Browse" Icon="icon_feed.png">
-        <ShellContent Route="ItemsPage" ContentTemplate="{DataTemplate local:ItemsPage}" />
+    <FlyoutItem Title="Clients">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{x:Static ui:MaterialIcon.Person}"
+                             Color="{StaticResource PrimaryText}"
+                             FontFamily="{StaticResource FontIconFamily}"
+                             Size="{StaticResource FontIconSize}" />
+        </FlyoutItem.Icon>
+        <ShellContent Route="clients" ContentTemplate="{DataTemplate local:ClientesPage}" />
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="Logout" StyleClass="MenuItemLayoutStyle" Clicked="OnMenuItemClicked">
     </MenuItem>
-
 
     <!-- Optional Templates 
     // These may be provided inline as below or as separate classes.

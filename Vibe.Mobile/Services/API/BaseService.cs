@@ -36,7 +36,8 @@ namespace Vibe.Mobile.Services.API
                 queryString = $"?{string.Join("&", queryParameters.ToArray())}";
             }
 
-            return $"{AppConsts.RemoteApiUrl}/{serviceName}/{method}{queryString}";
+            // Para a API da vibe, o parâmetro 'method' não é necessário
+            return $"{AppConsts.RemoteApiUrl}/{serviceName}/{queryString}";
         }
 
         public HttpContent GetJsonContent(object input)

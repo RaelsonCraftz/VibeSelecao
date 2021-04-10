@@ -11,13 +11,23 @@ namespace Vibe.Mobile
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//LoginPage");
+        }
+
+        // Este é um "hack" para possibilitar que o botão de hardware de voltar no Android envie o comando para o OnBackButtonPressed da página
+        // Sem isso, o Shell executa a função sem que a página tome ciência do evento
+        protected override bool OnBackButtonPressed()
+        {
+            var page = (Shell.Current?.CurrentItem?.CurrentItem as IShellSectionController)?.PresentedPage;
+
+            if (page.SendBackButtonPressed())
+                return true;
+            else
+                return base.OnBackButtonPressed();
         }
     }
 }

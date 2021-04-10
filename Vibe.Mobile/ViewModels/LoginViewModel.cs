@@ -1,6 +1,8 @@
-﻿using Craftz.ViewModel;
+﻿using Acr.UserDialogs;
+using Craftz.ViewModel;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using Vibe.Domain.Model.Input;
 using Vibe.Domain.Services;
 using Vibe.Mobile.Services.Shared;
@@ -10,16 +12,20 @@ namespace Vibe.Mobile.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly ILoginService loginService;
+        private readonly IAutenticacaoService autenticacaoService;
         private readonly IApplicationService applicationService;
 
         public LoginViewModel()
         {
-            loginService = DependencyService.Get<ILoginService>();
+            autenticacaoService = DependencyService.Get<IAutenticacaoService>();
             applicationService = DependencyService.Get<IApplicationService>();
         }
 
         #region Bindable Properties
+
+        public string CPFSemMascara => CPF
+            .Replace("-", "")
+            .Replace(".", "");
 
         public string CPF
         {
@@ -28,11 +34,21 @@ namespace Vibe.Mobile.ViewModels
         }
         private string _cpf;
 
-        // A senha é armazenada na memória já criptografada
+        // A senha é armazenada na memória da aplicação já criptografada
         public string PasswordHash
         {
             get => _passwordHash;
-            set { _passwordHash = CalcularMD5Hash(value); OnPropertyChanged(); }
+            set 
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _passwordHash = string.Empty;
+                    return;
+                }
+
+                _passwordHash = CalcularMD5Hash(value); 
+                OnPropertyChanged(); 
+            }
         }
         private string _passwordHash;
 
@@ -47,17 +63,34 @@ namespace Vibe.Mobile.ViewModels
         private Command _autenticar;
         private void AutenticarExecute()
         {
-            logService.LogRequestAsync(async () =>
+            _ = SetBusyAsync(async () =>
             {
-                var token = await loginService.Autenticacao(new LoginInput
-                { 
-                    cpf = CPF,
-                    senha = PasswordHash,
+                await logService.LogRequestAsync(async () =>
+                {
+                    var autenticacao = await autenticacaoService.Autenticacao(new AutenticacaoInput
+                    { 
+                        Cpf = CPF,
+                        Senha = PasswordHash,
+                    });
+
+                    // Caso não haja chave, exibir a mensagem enviada pela API
+                    if (string.IsNullOrWhiteSpace(autenticacao.Chave))
+                    {
+                        UserDialogs.Instance.Toast(autenticacao.Mensagem);
+                        return;
+                    }
+
+                    applicationService.SetToken(autenticacao.Chave);
+
+                    //TODO: ir para a próxima tela
+                },
+                log =>
+                {
+                    if (!string.IsNullOrWhiteSpace(log))
+                        UserDialogs.Instance.Toast(log);
+
+                    return Task.CompletedTask;
                 });
-
-                applicationService.SetToken(token);
-
-                //TODO: continuar com a tela de login
             });
         }
 
@@ -85,7 +118,11 @@ namespace Vibe.Mobile.ViewModels
 
         #region Initializers
 
-
+        public override void Initialize()
+        {
+            // Inicialize os serviços no BaseViewModel
+            base.Initialize();
+        }
 
         #endregion
     }
