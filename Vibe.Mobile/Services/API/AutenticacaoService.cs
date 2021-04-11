@@ -9,7 +9,13 @@ namespace Vibe.Mobile.Services.API
     {
         public async Task<AutenticacaoOutput> Autenticacao(AutenticacaoInput input)
         {
-            return await Read<AutenticacaoOutput>(await http.Client.PostAsync(GetEndpoint(), GetJsonContent(input)));
+            var output = await Read<AutenticacaoOutput>(await http.Client.PostAsync(GetEndpoint(), GetJsonContent(input)));
+
+            // Caso existe uma chave de retorno, definir como header padrão do HttpService
+            if (!string.IsNullOrWhiteSpace(output?.Chave))
+                http.SetBearer(output.Chave);
+
+            return output;
         }
     }
 }

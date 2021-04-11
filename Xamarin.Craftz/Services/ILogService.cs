@@ -30,6 +30,8 @@ namespace Xamarin.Craftz.Services
             catch (Exception ex)
             {
 #if !DEBUG
+                //TODO: implementar injeção de um serviço de Analytics no App.xaml.cs usando o AppCenter
+                // Para este projeto de seleção da Vibe isso não foi feito, mas o que falta é apenas criar o projeto no AppCenter e registrar a chave
                 Crashes.TrackError(ex, new Dictionary<string, string>
                 {
                     { ex.GetType().Name, caller }
@@ -49,6 +51,8 @@ namespace Xamarin.Craftz.Services
             catch (Exception ex)
             {
 #if !DEBUG
+                //TODO: implementar injeção de um serviço de Analytics no App.xaml.cs usando o AppCenter
+                // Para este projeto de seleção da Vibe isso não foi feito, mas o que falta é apenas criar o projeto no AppCenter e registrar a chave
                 Crashes.TrackError(ex, new Dictionary<string, string>
                 {
                     { ex.GetType().Name, caller }
@@ -68,6 +72,8 @@ namespace Xamarin.Craftz.Services
             catch (WebException exWeb)
             {
 #if !DEBUG
+                //TODO: implementar injeção de um serviço de Analytics no App.xaml.cs usando o AppCenter
+                // Para este projeto de seleção da Vibe isso não foi feito, mas o que falta é apenas criar o projeto no AppCenter e registrar a chave
                 Crashes.TrackError(exWeb, new Dictionary<string, string>
                 {
                     { exWeb.GetType().Name, caller }
@@ -86,6 +92,8 @@ namespace Xamarin.Craftz.Services
             catch (Exception ex)
             {
 #if !DEBUG
+                //TODO: implementar injeção de um serviço de Analytics no App.xaml.cs usando o AppCenter
+                // Para este projeto de seleção da Vibe isso não foi feito, mas o que falta é apenas criar o projeto no AppCenter e registrar a chave
                 Crashes.TrackError(ex, new Dictionary<string, string>
                 {
                     { ex.GetType().Name, caller }

@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Xamarin.Forms;
+﻿using Craftz.Views;
+using Vibe.Domain.Model;
+using Vibe.Mobile.ViewModels;
 using Xamarin.Forms.Xaml;
 
 namespace Vibe.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ClienteDetailPage : ContentPage
+    public partial class ClienteDetailPage : BasePage<ClienteDetailViewModel, Cliente>
     {
         public ClienteDetailPage()
         {

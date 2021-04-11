@@ -9,22 +9,24 @@ namespace Vibe.Mobile
 {
     public partial class App : Application
     {
-
         public App()
         {
             InitializeComponent();
 
             // Registrando serviços que não são de plataforma
             DependencyService.Register<ApplicationService>();
+            DependencyService.Register<CacheService>();
             DependencyService.Register<HttpService>();
             DependencyService.Register<LogService>();
 
             // Serviços de API
             DependencyService.Register<AutenticacaoService>();
+            DependencyService.Register<ClienteService>();
             DependencyService.Register<UsuarioService>();
 
             // Rotas do Shell
             Routing.RegisterRoute(Rotas.Cadastro, typeof(CadastroPage));
+            Routing.RegisterRoute(Rotas.ClienteDetail, typeof(ClienteDetailPage));
 
             MainPage = new AppShell();
         }

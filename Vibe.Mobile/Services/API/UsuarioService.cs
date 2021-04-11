@@ -16,5 +16,10 @@ namespace Vibe.Mobile.Services.API
         {
             return await Read<BaseOutput>(await http.Client.PostAsync(GetEndpoint(), GetJsonContent(input)));
         }
+
+        public async Task<UsuarioOutput> Usuario(string cpf)
+        {
+            return await Read<UsuarioOutput>(await http.Client.GetAsync($"{GetEndpoint()}/{cpf}"));
+        }
     }
 }

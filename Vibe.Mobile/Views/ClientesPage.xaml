@@ -1,12 +1,83 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Vibe.Mobile.Views.ClientesPage">
+<craftz:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="Vibe.Mobile.Views.ClientesPage"
+                 x:DataType="viewmodel:ClientesViewModel"
+                 x:TypeArguments="viewmodel:ClientesViewModel"
+                 x:Name="base"
+                 
+                 xmlns:ui="clr-namespace:Vibe.Mobile.Assets.UI"
+                 xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:droid="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
+                 xmlns:controls="clr-namespace:Vibe.Mobile.Controls"
+                 xmlns:elements="clr-namespace:Vibe.Mobile.ViewModels.Elements"
+                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels"
+                 
+                 Title="Clientes">
+
+    <ContentPage.BindingContext>
+        <viewmodel:ClientesViewModel />
+    </ContentPage.BindingContext>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <AbsoluteLayout>
+            <CollectionView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional"
+                            x:DataType="elements:ClienteElement"
+                            ItemsSource="{Binding BindingContext.Clientes, Source={x:Reference base}}"
+                            SelectionMode="None">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="5" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <ContentView Padding="5">
+                            <Frame>
+                                <Grid RowDefinitions="32,48,32" ColumnDefinitions="*,48">
+                                    <Label Grid.ColumnSpan="2" 
+                                           Text="{Binding Estrela}"
+                                           TextColor="{StaticResource TextIcons}"
+                                           FontFamily="{StaticResource FontIconFamily}"
+                                           FontSize="{StaticResource FontIconSize}" />
+                                    <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                           VerticalOptions="End"
+                                           Text="{Binding Nome, StringFormat='Nome: {0:0}'}" />
+                                    <Label Grid.Row="2" Grid.ColumnSpan="2"
+                                           Text="{Binding Cpf, StringFormat='CPF: {0:0}'}" />
+
+                                    <Button Grid.Row="1" Grid.Column="1"
+                                            WidthRequest="48" HeightRequest="48"
+                                            CornerRadius="24"
+                                            Command="{Binding BindingContext.VerCliente, Source={x:Reference base}}"
+                                            CommandParameter="{Binding Model}">
+                                        <Button.ImageSource>
+                                            <FontImageSource Glyph="{x:Static ui:MaterialIcon.Search}"
+                                                             FontFamily="{StaticResource FontIconFamily}"
+                                                             Size="{StaticResource FontIconSize}"
+                                                             Color="{StaticResource TextIcons}" />
+                                        </Button.ImageSource>
+                                    </Button>
+                                </Grid>
+                            </Frame>
+                        </ContentView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button AbsoluteLayout.LayoutBounds="0.95,0.95,48,48" AbsoluteLayout.LayoutFlags="PositionProportional"
+                    HeightRequest="48" WidthRequest="48"
+                    CornerRadius="24"
+                    Command="{Binding Reconectar}"
+                    IsVisible="{Binding IsOffline}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static ui:MaterialIcon.WifiOff}"
+                                     FontFamily="{StaticResource FontIconFamily}"
+                                     Size="{StaticResource FontIconSize}"
+                                     Color="{StaticResource TextIcons}" />
+                </Button.ImageSource>
+            </Button>
+        </AbsoluteLayout>
     </ContentPage.Content>
-</ContentPage>
+</craftz:BasePage>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<craftz:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="Vibe.Mobile.Views.MeuPerfilPage"
+                 x:DataType="viewmodel:MeuPerfilViewModel"
+                 x:TypeArguments="viewmodel:MeuPerfilViewModel"
+                 
+                 xmlns:ui="clr-namespace:Vibe.Mobile.Assets.UI"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:droid="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
+                 xmlns:controls="clr-namespace:Vibe.Mobile.Controls"
+                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels"
+                 
+                 Title="Meu Perfil">
+
+    <ContentPage.BindingContext>
+        <viewmodel:MeuPerfilViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <Style TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="2" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout Padding="5" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+                <Label Text="CPF"
+                       TextColor="{StaticResource PrimaryText}"
+                       TextDecorations="Underline"/>
+                <Label Text="{Binding CpfComMascara}" />
+                <BoxView />
+
+                <Label Text="Nome"
+                       TextColor="{StaticResource PrimaryText}"
+                       TextDecorations="Underline"/>
+                <Label Text="{Binding Nome}" />
+                <BoxView />
+
+                <Label Text="Nascimento"
+                       TextColor="{StaticResource PrimaryText}"
+                       TextDecorations="Underline" />
+                <Label Text="{Binding Nascimento}" />
+                <BoxView />
+            </StackLayout>
+
+            <Button AbsoluteLayout.LayoutBounds="0.95,0.95,48,48" AbsoluteLayout.LayoutFlags="PositionProportional"
+                    HeightRequest="48" WidthRequest="48"
+                    CornerRadius="24"
+                    Command="{Binding Reconectar}"
+                    IsVisible="{Binding IsOffline}">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static ui:MaterialIcon.WifiOff}"
+                                     FontFamily="{StaticResource FontIconFamily}"
+                                     Size="{StaticResource FontIconSize}"
+                                     Color="{StaticResource TextIcons}" />
+                </Button.ImageSource>
+            </Button>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</craftz:BasePage>

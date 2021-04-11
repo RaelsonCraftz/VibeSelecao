@@ -21,13 +21,13 @@ namespace Vibe.Mobile.ViewModels
             usuarioService = DependencyService.Get<IUsuarioService>();
         }
 
-        private string CPFSemMascara => CPF
+        private string CpfSemMascara => Cpf
             .Replace("-", string.Empty)
             .Replace(".", string.Empty);
 
         #region Bindable Properties
 
-        public string CPF
+        public string Cpf
         {
             get => _cpf;
             set { _cpf = value; OnPropertyChanged(); }
@@ -75,7 +75,6 @@ namespace Vibe.Mobile.ViewModels
             get { if (_cadastrar == null) _cadastrar = new Command(CadastrarExecute); return _cadastrar; }
         }
         private Command _cadastrar;
-
         private void CadastrarExecute()
         {
             _ = SetBusyAsync(async () =>
@@ -84,9 +83,9 @@ namespace Vibe.Mobile.ViewModels
                 {
                     var cadastro = await usuarioService.Usuario(new CriarUsuarioInput
                     {
-                        Cpf = CPFSemMascara,
-                        Nome = Nome,
-                        Nascimento = DateTime.SpecifyKind(Nascimento, DateTimeKind.Utc).ToString("o"),
+                        Cpf = CpfSemMascara,
+                        Nome = this.Nome,
+                        Nascimento = DateTime.SpecifyKind(this.Nascimento, DateTimeKind.Utc).ToString("o"),
                         Senha = SenhaHash,
                     });
 
@@ -98,7 +97,7 @@ namespace Vibe.Mobile.ViewModels
                         return;
                     }
 
-                    await Shell.Current.GoToAsync($"//{Rotas.Login}");
+                    await Shell.Current.GoToAsync($"//{Rotas.Autenticacao}");
 
                     UserDialogs.Instance.Toast("Cadastro feito com sucesso");
                 },

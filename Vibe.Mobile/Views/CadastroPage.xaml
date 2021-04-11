@@ -9,28 +9,27 @@
                  xmlns:droid="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
                  xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
                  xmlns:controls="clr-namespace:Vibe.Mobile.Controls"
-                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels">
+                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels"
+                 
+                 Title="Cadastro"
+                 
+                 Shell.TabBarIsVisible="False">
 
     <ContentPage.BindingContext>
         <viewmodel:CadastroViewModel />
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center"
-                     Padding="5">
+        <StackLayout Padding="5">
 
-            <Image Source="icLogo" />
-
-            <Label HorizontalOptions="Center" 
-                   FontSize="26"
-                   TextColor="{StaticResource Accent}"
-                   Text="Cadastro" />
+            <Image Source="icLogo"
+                   VerticalOptions="EndAndExpand"/>
 
             <BoxView HeightRequest="5"
                      BackgroundColor="{StaticResource Accent}" />
 
             <controls:MaskedEntry Placeholder="CPF"
-                                  Text="{Binding CPF}" />
+                                  Text="{Binding Cpf}" />
 
             <Entry Placeholder="Nome" 
                    Text="{Binding Nome}" />
@@ -40,9 +39,10 @@
                    IsPassword="True"/>
 
             <Label Text="Nascimento" />
-            <DatePicker Date="{Binding Nascimento}" />
+            <DatePicker Date="{Binding Nascimento}" Visual="Material" />
 
             <Button Text="Cadastrar"
+                    VerticalOptions="EndAndExpand"
                     Command="{Binding Cadastrar}" />
 
         </StackLayout>

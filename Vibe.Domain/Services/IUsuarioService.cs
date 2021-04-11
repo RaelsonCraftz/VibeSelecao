@@ -7,5 +7,6 @@ namespace Vibe.Domain.Services
     public interface IUsuarioService
     {
         Task<BaseOutput> Usuario(CriarUsuarioInput input);
+        Task<UsuarioOutput> Usuario(string cpf);
     }
 }

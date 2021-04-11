@@ -1,41 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Vibe.Domain.Model;
+using Vibe.Mobile.Core;
 using Xamarin.Essentials;
 
 namespace Vibe.Mobile.Services.Shared
 {
     public interface IApplicationService
     {
+        CredenciaisUsuario Usuario { get; }
+
         string AccessToken { get; }
 
-        string UserEmail { get; }
-
-        void SetToken(string token);
-
-        void SetEmail(string email);
+        void SetCacheUsuario(string accessToken, CredenciaisUsuario usuario);
     }
 
     public class ApplicationService : IApplicationService
     {
+        public CredenciaisUsuario Usuario { get; private set; }
+
         public string AccessToken { get; private set; }
 
-        public string UserEmail { get; private set; }
-
-        public ApplicationService()
+        public void SetCacheUsuario(string accessToken, CredenciaisUsuario usuario)
         {
-            
-        }
+            Usuario = usuario;
+            AccessToken = accessToken;
 
-        public void SetToken(string token)
-        {
-            AccessToken = token;
-            Preferences.Set(nameof(AccessToken), token);
-        }
-
-        public void SetEmail(string email)
-        {
-            UserEmail = email;
+            Preferences.Set(PreferenceKeys.AccessToken, accessToken);
+            Preferences.Set(PreferenceKeys.UsuarioCpf, usuario.Cpf);
+            Preferences.Set(PreferenceKeys.UsuarioSenhaHash, usuario.SenhaHash);
         }
     }
 }

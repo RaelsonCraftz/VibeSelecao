@@ -27,6 +27,7 @@ namespace Vibe.Mobile.Assets.UI
         public static string Organization = "\uF1D0";
         public static string Person = "\uE7FD";
         public static string Save = "\uE161";
+        public static string Search = "\uE8B6";
         public static string Settings = "\uE8B8";
         public static string Star = "\uE838";
         public static string StarBorder = "\uE83A";
@@ -34,5 +35,6 @@ namespace Vibe.Mobile.Assets.UI
         public static string Text = "\uE262";
         public static string Today = "\uE8DF";
         public static string Undo = "\uE166";
+        public static string WifiOff = "\uE648";
     }
 }

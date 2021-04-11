@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Vibe.Mobile.Core;
 using Vibe.Mobile.ViewModels;
 using Vibe.Mobile.Views;
+using Xamarin.Craftz.Services;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Vibe.Mobile
@@ -15,7 +18,14 @@ namespace Vibe.Mobile
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//LoginPage");
+            // Limpa as credenciais que estavam no cache
+            Preferences.Clear();
+
+            // Limpa o bearer token
+            var http = DependencyService.Get<IHttpService>();
+            http.ClearBearer();
+
+            await Shell.Current.GoToAsync($"//{Rotas.Autenticacao}");
         }
 
         // Este é um "hack" para possibilitar que o botão de hardware de voltar no Android envie o comando para o OnBackButtonPressed da página

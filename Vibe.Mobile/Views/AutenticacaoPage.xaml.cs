@@ -5,9 +5,9 @@ using Xamarin.Forms.Xaml;
 namespace Vibe.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class LoginPage : BasePage<LoginViewModel>
+    public partial class AutenticacaoPage : BasePage<AutenticacaoViewModel>
     {
-        public LoginPage()
+        public AutenticacaoPage()
         {
             InitializeComponent();
         }

@@ -1,12 +1,85 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Vibe.Mobile.Views.ClienteDetailPage">
+<craftz:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 x:Class="Vibe.Mobile.Views.ClienteDetailPage"
+                 x:DataType="viewmodel:ClienteDetailViewModel"
+                 x:TypeArguments="viewmodel:ClienteDetailViewModel, model:Cliente"
+                 x:Name="base"
+                 
+                 xmlns:ui="clr-namespace:Vibe.Mobile.Assets.UI"
+                 xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+                 xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:droid="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+                 xmlns:model="clr-namespace:Vibe.Domain.Model;assembly=Vibe.Domain"
+                 xmlns:craftz="clr-namespace:Craftz.Views;assembly=Xamarin.Craftz"
+                 xmlns:controls="clr-namespace:Vibe.Mobile.Controls"
+                 xmlns:elements="clr-namespace:Vibe.Mobile.ViewModels.Elements"
+                 xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels"
+                 
+                 Title="Detalhes">
+
+    <ContentPage.BindingContext>
+        <viewmodel:ClienteDetailViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="2" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource PrimaryText}" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Padding="5">
+            <Frame HorizontalOptions="Center"
+                   WidthRequest="128" HeightRequest="128" 
+                   CornerRadius="64"
+                   Padding="0"
+                   BorderColor="{StaticResource Accent}">
+                <Image HorizontalOptions="Center"
+                       Aspect="AspectFill"
+                       Source="{Binding Detalhe.Imagem}" />
+            </Frame>
+
+            <Frame BackgroundColor="{StaticResource Divider}">
+                <!--Para a eventualidade da tela ser pequena, ScrollView-->
+                <ScrollView>
+                    <StackLayout>
+                        <Label Margin="0,0,0,10"
+                               Text="{Binding Cliente.Estrela}"
+                               TextColor="{StaticResource TextIcons}"
+                               FontFamily="{StaticResource FontIconFamily}"
+                               FontSize="{StaticResource FontIconSize}" />
+
+                        <Label Text="{Binding Cliente.Nome, StringFormat='Nome: {0:0}'}" />
+                        <BoxView />
+
+                        <Label Text="{Binding Cliente.Cpf, StringFormat='Cpf: {0:0}'}" />
+                        <BoxView />
+
+                        <Label Text="{Binding Detalhe.Empresa, StringFormat='Empresa: {0:0}'}" />
+                        <BoxView />
+
+                        <Label Text="{Binding Detalhe.Endereco, StringFormat='Endereco: {0:0}'}" />
+                        <BoxView />
+
+                        <Label Text="{Binding Detalhe.Numero, StringFormat='Numero: {0:0}'}" />
+                        <BoxView />
+
+                        <Label Text="{Binding Detalhe.Complemento, StringFormat='Complemento: {0:0}'}" />
+                        <BoxView />
+
+                        <Label Text="{Binding Detalhe.Cidade, StringFormat='Cidade: {0:0}'}" />
+                        <BoxView />
+                    </StackLayout>
+                </ScrollView>
+            </Frame>
+            
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</craftz:BasePage>

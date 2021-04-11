@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <craftz:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                 x:Class="Vibe.Mobile.Views.LoginPage"
-                 x:DataType="viewmodel:LoginViewModel"
-                 x:TypeArguments="viewmodel:LoginViewModel"
+                 x:Class="Vibe.Mobile.Views.AutenticacaoPage"
+                 x:DataType="viewmodel:AutenticacaoViewModel"
+                 x:TypeArguments="viewmodel:AutenticacaoViewModel"
                  
                  xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
                  xmlns:droid="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
@@ -11,10 +11,11 @@
                  xmlns:controls="clr-namespace:Vibe.Mobile.Controls"
                  xmlns:viewmodel="clr-namespace:Vibe.Mobile.ViewModels"
                  
-                 Shell.NavBarIsVisible="False">
+                 Shell.NavBarIsVisible="False"
+                 Shell.TabBarIsVisible="False">
 
     <ContentPage.BindingContext>
-        <viewmodel:LoginViewModel />
+        <viewmodel:AutenticacaoViewModel />
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
@@ -23,7 +24,7 @@
             <Image Source="icLogo" 
                    VerticalOptions="CenterAndExpand" />
 
-            <controls:MaskedEntry Text="{Binding CPF}"
+            <controls:MaskedEntry Text="{Binding CpfComMascara}"
                                   Keyboard="Numeric"
                                   Placeholder="CPF" />
 
@@ -40,7 +41,7 @@
                     BackgroundColor="{StaticResource TextIcons}"
                     BorderColor="{StaticResource Accent}"
                     BorderWidth="2"
-                    Text="Cadastrar"
+                    Text="Cadastro"
                     TextColor="{StaticResource Accent}"
                     Command="{Binding AbrirCadastro}" />
             

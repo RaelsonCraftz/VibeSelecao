@@ -43,13 +43,13 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{x:OnPlatform UWP=Transparent, iOS=White}" />
-                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Divider}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Accent}" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -66,7 +66,7 @@
                         <VisualStateGroup x:Name="CommonStates">
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
-                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource Primary}" />
+                                    <Setter TargetName="FlyoutItemLabel" Property="Label.TextColor" Value="{StaticResource TextIcons}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -76,12 +76,32 @@
         </ResourceDictionary>
     </Shell.Resources>
 
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <StackLayout Padding="10"
+                         BackgroundColor="{StaticResource TextIcons}"
+                         HeightRequest="{OnPlatform iOS=180}">
+                <Image HorizontalOptions="Center" VerticalOptions="Center"
+                       Margin="10"
+                       Source="icLogo" />
+
+                <Label HorizontalOptions="End" VerticalOptions="EndAndExpand"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource Accent}"
+                       Text="Vibe Selecao" />
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+    
     <!--
         Utilizando o Shell como arquitetura de navegação, uma forma de se isolar a tela de login do restante do aplicativo é registrar essa tela como TabBar
     -->
     <TabBar>
-        <ShellContent Route="{x:Static core:Rotas.Login}" 
-                      ContentTemplate="{DataTemplate local:LoginPage}" />
+        <ShellContent Route="{x:Static core:Rotas.Loading}" 
+                      ContentTemplate="{DataTemplate local:LoadingPage}" />
+        <ShellContent Route="{x:Static core:Rotas.Autenticacao}" 
+                      ContentTemplate="{DataTemplate local:AutenticacaoPage}" />
     </TabBar>
     
     <!-- 
@@ -89,10 +109,21 @@
         FlyoutDisplayOptions="AsMultipleItems" will create a separate flyout item for each child element    
         https://docs.microsoft.com/dotnet/api/xamarin.forms.shellgroupitem.flyoutdisplayoptions?view=xamarin-forms
     -->
-    <FlyoutItem Title="Clientes">
+    <FlyoutItem Title="Meu Perfil">
         <FlyoutItem.Icon>
             <FontImageSource Glyph="{x:Static ui:MaterialIcon.Person}"
-                             Color="{StaticResource PrimaryText}"
+                             Color="{StaticResource TextIcons}"
+                             FontFamily="{StaticResource FontIconFamily}"
+                             Size="{StaticResource FontIconSize}" />
+        </FlyoutItem.Icon>
+        <ShellContent Route="{x:Static core:Rotas.MeuPerfil}" 
+                      ContentTemplate="{DataTemplate local:MeuPerfilPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Clientes">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{x:Static ui:MaterialIcon.Groups}"
+                             Color="{StaticResource TextIcons}"
                              FontFamily="{StaticResource FontIconFamily}"
                              Size="{StaticResource FontIconSize}" />
         </FlyoutItem.Icon>

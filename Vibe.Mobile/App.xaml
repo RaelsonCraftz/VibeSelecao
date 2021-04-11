@@ -42,6 +42,12 @@
             <Color x:Key="Danger">#DF4654</Color>
 
             <!--Generic Styles-->
+            <Style TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource Divider}" />
+                <Setter Property="Padding" Value="5" />
+                <Setter Property="CornerRadius" Value="6" />
+                <Setter Property="Visual" Value="Material" />
+            </Style>
             <Style TargetType="Button">
                 <Setter Property="Visual" Value="Material" />
                 <Setter Property="BackgroundColor" Value="{StaticResource Accent}" />

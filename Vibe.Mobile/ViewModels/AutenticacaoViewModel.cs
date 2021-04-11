@@ -1,39 +1,41 @@
 ﻿using Acr.UserDialogs;
 using Craftz.ViewModel;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
+using Vibe.Domain.Model;
 using Vibe.Domain.Model.Input;
 using Vibe.Domain.Services;
 using Vibe.Mobile.Core;
 using Vibe.Mobile.Services.Shared;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Vibe.Mobile.ViewModels
 {
-    public class LoginViewModel : BaseViewModel
+    public class AutenticacaoViewModel : BaseViewModel
     {
-        private readonly IAutenticacaoService autenticacaoService;
         private readonly IApplicationService applicationService;
+        private readonly IAutenticacaoService autenticacaoService;
+        private readonly ICacheService cacheService;
 
-        public LoginViewModel()
+        public AutenticacaoViewModel()
         {
-            autenticacaoService = DependencyService.Get<IAutenticacaoService>();
             applicationService = DependencyService.Get<IApplicationService>();
+            autenticacaoService = DependencyService.Get<IAutenticacaoService>();
+            cacheService = DependencyService.Get<ICacheService>();
         }
         
-        private string CPFSemMascara => CPF
+        private string Cpf => CpfComMascara
             .Replace("-", string.Empty)
             .Replace(".", string.Empty);
 
         #region Bindable Properties
 
-        public string CPF
+        public string CpfComMascara
         {
-            get => _cpf;
-            set { _cpf = value; OnPropertyChanged(); }
+            get => _cpfComMascara;
+            set { _cpfComMascara = value; OnPropertyChanged(); }
         }
-        private string _cpf;
+        private string _cpfComMascara;
 
         // A senha é armazenada na memória da aplicação já criptografada
         public string SenhaHash
@@ -69,8 +71,8 @@ namespace Vibe.Mobile.ViewModels
                 await logService.LogRequestAsync(async () =>
                 {
                     var autenticacao = await autenticacaoService.Autenticacao(new AutenticacaoInput
-                    { 
-                        Cpf = CPFSemMascara,
+                    {
+                        Cpf = this.Cpf,
                         Senha = SenhaHash,
                     });
 
@@ -81,9 +83,13 @@ namespace Vibe.Mobile.ViewModels
                         return;
                     }
 
-                    applicationService.SetToken(autenticacao.Chave);
+                    applicationService.SetCacheUsuario(autenticacao.Chave, new CredenciaisUsuario
+                    {
+                        Cpf = this.Cpf,
+                        SenhaHash = this.SenhaHash,
+                    });
 
-                    //TODO: ir para a próxima tela
+                    await Shell.Current.GoToAsync($"//{Rotas.MeuPerfil}");
                 },
                 log =>
                 {
