@@ -2,6 +2,7 @@
 Repositório criado para a seleção da Vibe
 
 Autor: Raelson Farias de Araújo
+
 Documento de referência: https://s3.amazonaws.com/gupy5/production/companies/688/emails/1617720284946/cd4c0a20-96e2-11eb-b772-097ab89d1a85/vibeseleomobile2021-01.pdf
 
 Alguns pontos importantes sobre o projeto:
