@@ -11,9 +11,7 @@ Alguns pontos importantes sobre o projeto:
 
 O projeto foi inciado nesta sexta à noite (09/04) e concluído no domingo às 20:00 (11/04). Para agilizar o projeto, utilizei o **Xamarin.Craftz** que é uma biblioteca construída por mim com implementações base para ViewModel, Elements (que são basicamente ViewModels focados apenas para as entidades do projeto), Behaviors, Pages, Dialogs, etc. Não utilizei nenhuma dependência externa para implementação do MVVM (como Prism, MVVMCross, etc.), usei apenas o que se encontra no **Xamarin.Craftz**.
 
-Foi adotado para o projeto um esquema de IoC simples, utilizando o DependencyService para registrar e retornar as dependências do container. Os serviços básicos podem ser encontrados nas implementações do **BaseViewModel** no projeto **Xamarin.Craftz** e os serviços do projeto estão no **App.xaml.cs**.
-
-Para este projeto não foram necessárias implementações específicas de plataforma além do próprio Splash Screen do Android e iOS.
+Foi adotado para o projeto um esquema de IoC simples, utilizando o DependencyService para registrar e retornar as dependências do container. Os serviços básicos podem ser encontrados nas implementações do **BaseViewModel** no projeto **Xamarin.Craftz** e os serviços do projeto estão registrados no **App.xaml.cs** ou na pasta Services do projeto **Vibe.Mobile.Selecao**. Os serviços foram divididos em dois tipos: API e Shared. API são os serviços responsáveis por se comunicar com a API do backend e os Shared são serviços com suas implementações no próprio código compartilhado. Para este projeto especificamente não foram necessárias implementações específicas de plataforma além do próprio Splash Screen do Android e iOS.
 
 ### Visual Studio
 
